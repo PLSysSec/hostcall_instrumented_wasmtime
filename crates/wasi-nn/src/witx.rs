@@ -1,6 +1,7 @@
 //! Contains the macro-generated implementation of wasi-nn from the its witx definition file.
 use crate::ctx::WasiNnCtx;
 use crate::ctx::WasiNnError;
+use wiggle::timing::{start_timer, stop_timer, push_result};
 
 // Generate the traits and types of wasi-nn in several Rust modules (e.g. `types`).
 wiggle::from_witx!({

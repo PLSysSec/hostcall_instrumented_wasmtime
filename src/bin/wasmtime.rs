@@ -62,7 +62,7 @@ impl WasmtimeApp {
 }
 
 fn main() -> Result<()> {
-    WasmtimeApp::from_iter_safe(std::env::args())
+    let res = WasmtimeApp::from_iter_safe(std::env::args())
         .unwrap_or_else(|e| match e.kind {
             ErrorKind::HelpDisplayed
             | ErrorKind::VersionDisplayed
@@ -71,5 +71,19 @@ fn main() -> Result<()> {
                 RunCommand::from_iter_safe(std::env::args()).unwrap_or_else(|_| e.exit()),
             ),
         })
-        .execute()
+        .execute();
+    
+    use statistical::mean;
+    use wiggle::timing::results;
+
+    results.with(|r| {
+            // println!("results: {:?}", r);
+            for (k,v) in r.borrow().iter(){
+                if !v.is_empty(){
+                    let mean = mean(v);
+                    println!("{:?}: num_samples = {:?} mean = {:?} ns", k, v.len(), mean)
+                }
+            }
+        });
+    return res;
 }

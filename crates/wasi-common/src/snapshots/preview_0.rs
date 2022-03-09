@@ -13,6 +13,8 @@ use std::io::{IoSlice, IoSliceMut};
 use std::ops::Deref;
 use tracing::debug;
 use wiggle::GuestPtr;
+use wiggle::timing::{start_timer, stop_timer, push_result};
+
 
 wiggle::from_witx!({
     witx: ["$WASI_ROOT/phases/old/snapshot_0/witx/wasi_unstable.witx"],

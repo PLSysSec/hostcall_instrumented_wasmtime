@@ -92,7 +92,9 @@ fn _define_func(
                     memory: &dyn #rt::GuestMemory,
                     #(#abi_params),*
                 ) -> Result<#abi_ret, #rt::Trap> {
+                    use super::{start_timer, stop_timer, push_result};
                     use std::convert::TryFrom as _;
+                    let __start_ts = start_timer();
                     #mk_span
                     _span.in_scope(|| {
                       #body
@@ -110,8 +112,10 @@ fn _define_func(
                     memory: &'a dyn #rt::GuestMemory,
                     #(#abi_params),*
                 ) -> impl std::future::Future<Output = Result<#abi_ret, #rt::Trap>> + 'a {
+                    use super::{start_timer, stop_timer, push_result};
                     use std::convert::TryFrom as _;
                     use #rt::tracing::Instrument as _;
+                    let __start_ts = start_timer();
                     #mk_span
                     async move {
                         #body
@@ -277,6 +281,8 @@ impl witx::Bindgen for Rust<'_> {
                         #rt::tracing::Level::TRACE,
                         result = #rt::tracing::field::debug(&ret),
                     );
+                    let __end_ts = stop_timer();
+                    push_result(stringify!(#ident), __start_ts, __end_ts);
                 });
 
                 if func.results.len() > 0 {

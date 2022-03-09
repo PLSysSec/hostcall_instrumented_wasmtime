@@ -18,6 +18,7 @@ use std::io::{IoSlice, IoSliceMut};
 use std::ops::{Deref, DerefMut};
 use tracing::debug;
 use wiggle::GuestPtr;
+use wiggle::timing::{start_timer, stop_timer, push_result}; 
 
 wiggle::from_witx!({
     witx: ["$WASI_ROOT/phases/snapshot/witx/wasi_snapshot_preview1.witx"],
@@ -1135,7 +1136,8 @@ impl wasi_snapshot_preview1::WasiSnapshotPreview1 for WasiCtx {
     }
 
     async fn sched_yield(&mut self) -> Result<(), Error> {
-        self.sched.sched_yield().await
+        Ok(())
+        //self.sched.sched_yield().await
     }
 
     async fn random_get<'a>(

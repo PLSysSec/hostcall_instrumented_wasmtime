@@ -16,6 +16,7 @@ pub use bitflags;
 pub use witx;
 
 pub mod borrow;
+pub mod timing;
 mod error;
 mod guest_type;
 mod region;

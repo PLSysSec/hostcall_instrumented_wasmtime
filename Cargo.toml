@@ -29,6 +29,7 @@ wasmtime-wast = { path = "crates/wast", version = "=0.31.0" }
 wasmtime-wasi = { path = "crates/wasi", version = "0.31.0" }
 wasmtime-wasi-crypto = { path = "crates/wasi-crypto", version = "0.31.0", optional = true }
 wasmtime-wasi-nn = { path = "crates/wasi-nn", version = "0.31.0", optional = true }
+wiggle = { path = "crates/wiggle", default-features = false, version = "=0.31.0" }
 structopt = { version = "0.3.5", features = ["color", "suggestions"] }
 anyhow = "1.0.19"
 target-lexicon = { version = "0.12.0", default-features = false }
@@ -39,6 +40,8 @@ rayon = "1.5.0"
 humantime = "2.0.0"
 wasmparser = "0.81.0"
 lazy_static = "1.4.0"
+
+statistical = "1.0.0"
 
 [target.'cfg(unix)'.dependencies]
 rustix = "0.26.2"
