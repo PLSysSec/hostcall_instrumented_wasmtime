@@ -75,13 +75,14 @@ fn main() -> Result<()> {
     
     use statistical::mean;
     use wiggle::timing::results;
-
+    use std::fs::File;
+    use std::io::Write;
+    let mut f = File::create("./wasmtime_results.txt").expect("Unable to open file");
     results.with(|r| {
-            // println!("results: {:?}", r);
             for (k,v) in r.borrow().iter(){
                 if !v.is_empty(){
                     let mean = mean(v);
-                    println!("{:?}: num_samples = {:?} mean = {:?} ns", k, v.len(), mean)
+                    writeln!(f, "{:?}: num_samples = {:?} mean = {:?} ns", k, v.len(), mean);
                 }
             }
         });
