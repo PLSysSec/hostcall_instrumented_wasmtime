@@ -1171,6 +1171,15 @@ impl wasi_snapshot_preview1::WasiSnapshotPreview1 for WasiCtx {
     async fn sock_shutdown(&mut self, _fd: types::Fd, _how: types::Sdflags) -> Result<(), Error> {
         Err(Error::trap("sock_shutdown unsupported"))
     }
+
+    async fn socket(&mut self, _domain: u32, _ty: u32, _protocol: u32) -> Result<u32, Error> {
+        Err(Error::trap("socket unsupported"))
+    }
+
+    async fn sock_connect(&mut self, _fd: u32, _addr: u32, _addrlen: u32) -> Result<(), Error> {
+        Err(Error::trap("sock_connect unsupported"))
+    }
+    
 }
 
 impl From<types::Advice> for Advice {
