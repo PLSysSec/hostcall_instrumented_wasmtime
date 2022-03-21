@@ -77,12 +77,14 @@ fn main() -> Result<()> {
     use wiggle::timing::results;
     use std::fs::File;
     use std::io::Write;
+    use statistical::univariate::geometric_mean;
     let mut f = File::create("./wasmtime_results.txt").expect("Unable to open file");
     results.with(|r| {
             for (k,v) in r.borrow().iter(){
                 if !v.is_empty(){
                     let mean = mean(v);
-                    writeln!(f, "{:?}: num_samples = {:?} mean = {:?} ns", k, v.len(), mean);
+                    let geomean = geometric_mean(v);
+                    writeln!(f, "{:?},{:?},{:?},{:?}", k, v.len(), mean, geomean);
                 }
             }
         });
